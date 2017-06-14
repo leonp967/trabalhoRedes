@@ -12,33 +12,6 @@
 #define BUFFER_SIZE 1600
 #define MAX_DATA_SIZE 1500
 
-void separaIP(char* arg, char ip1, char ip2, char ip3, char ip4){
-    int i;
-    char* aux;
-    for(i = 0; i < 16; i++){
-       if(i < 3 && arg[i] == '.')
-       {
-         ip1 = atoi(aux);
-         strcpy(aux, "");
-       }
-       else if(i < 7 && arg[i] == '.')
-       {
-         ip2 = atoi(aux);
-         strcpy(aux, "");
-       }
-       else if(i < 11 && arg[i] == '.')
-       {
-         ip3 = atoi(aux);
-         strcpy(aux, "");
-       }
-       else if(i == 15)
-       {
-         ip4 = atoi(aux);
-       }
-       else strncat(aux, &arg[i], 1); 
-    }
-}
-
 int main(int argc, char *argv[])
 {
 	int fd;
@@ -137,11 +110,14 @@ int main(int argc, char *argv[])
 
     // IP origem
     unsigned char ipOrigem[4];
-    strcpy(ipOrigem, argv[2]);
-    char *ip;
-    char ip1,ip2,ip3,ip4;
-    //separaIP(argv[2], ip1, ip2, ip3, ip4);
-    //printf("IP origem: %d %d %d %d\n", ip1, ip2, ip3, ip4);
+    char* ip1 = strtok(argv[2], ".");
+    char* ip2 = strtok(NULL, ".");
+    char* ip3 = strtok(NULL, ".");
+    char* ip4 = strtok(NULL, ".");
+    ipOrigem[0] = atoi(ip1);
+    ipOrigem[1] = atoi(ip2);
+    ipOrigem[2] = atoi(ip3);
+    ipOrigem[3] = atoi(ip4);
     memcpy(buffer + frame_len, ipOrigem, sizeof(ipOrigem));
     frame_len += sizeof(ipOrigem);
 
@@ -151,7 +127,11 @@ int main(int argc, char *argv[])
     
     //IP destino
     unsigned char ipDestino[4];
-    strcpy(ipDestino, argv[3]);
+    ipDestino[0] = atoi(ip1);
+    ipDestino[1] = atoi(ip2);
+    ipDestino[2] = atoi(ip3);
+    ipDestino[3] = atoi(ip4) + 1;
+    printf("IP Destino: %d %d %d %d\n", ipDestino[0], ipDestino[1], ipDestino[2], ipDestino[3]);
     memcpy(buffer + frame_len, ipDestino, sizeof(ipDestino));
     frame_len += sizeof(ipDestino);
 
