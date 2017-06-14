@@ -128,10 +128,10 @@ int main(int argc, char *argv[])
 	char* ip2 = strtok(NULL, ".");
 	char* ip3 = strtok(NULL, ".");
 	char* ip4 = strtok(NULL, ".");
-	ipOrigem[0] = atoi(ip1);
-	ipOrigem[1] = atoi(ip2);
-	ipOrigem[2] = atoi(ip3);
-	ipOrigem[3] = atoi(ip4);
+	ipOrigem[0] = (char) atoi(ip1);
+	ipOrigem[1] = (char) atoi(ip2);
+	ipOrigem[2] = (char) atoi(ip3);
+	ipOrigem[3] = (char) atoi(ip4);
 
 	for (ip = 1; ip < 255; ip++) {
 /* Cria um descritor de socket do tipo RAW */
@@ -221,10 +221,10 @@ int main(int argc, char *argv[])
 		
 		//IP destino
 		unsigned char ipDestino[4];
-		ipDestino[0] = atoi(ip1);
-		ipDestino[1] = atoi(ip2);
-		ipDestino[2] = atoi(ip3);
-        ipDestino[3] = ip;
+		ipDestino[0] = (char) atoi(ip1);
+		ipDestino[1] = (char) atoi(ip2);
+		ipDestino[2] = (char) atoi(ip3);
+        ipDestino[3] = (char) ip;
 	    memcpy(buffer + frame_len, ipDestino, sizeof(ipDestino));
     	frame_len += sizeof(ipDestino);
 
